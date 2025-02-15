@@ -2,14 +2,14 @@
 
 $x -10;
 
-function variables(){
+//function variables(){
     $y - 20;
     global $x;
     echo $y;
 
-}
+//}
 
-variables();
+//variables();
 echo">br>  $x"
 
 ?>

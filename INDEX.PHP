@@ -1,5 +1,11 @@
 <?php
 
+//$school = "Digital school"
+//$age = 16
+
+
+
+
 //$x =120;
 //$sy =20;
 
