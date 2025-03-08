@@ -1,4 +1,4 @@
-<?php
+
 $sport = array("Football", "Basketball", "Voleyball", "Handball", "Box", "Kickbox");
 //echo $sport[0];
 //echo implode(" ", $sport)."<br>";
