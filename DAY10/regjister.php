@@ -1,8 +1,6 @@
 <?php
 
-
 include_once('config.php');
-
 
 if (isset($_POST['submit'])) {
     var_dump($_POST);
@@ -13,17 +11,14 @@ if (isset($_POST['submit'])) {
     $tempPass = $_POST['password'];
     $password = password_hash($tempPass, PASSWORD_DEFAULT);
 
-
     if (empty($name) || empty($surname) || empty($username) || empty($email) || empty($password)) {
         echo "You need to fill all these fields!";
     } else {
         $sql = "SELECT username FROM users WHERE username = :username";
 
-
         $tempSQL = $connect->prepare($sql);
         $tempSQL->bindParam(':username', $username);
         $tempSQL->execute();
-
 
         if ($tempSQL->rowCount() > 0) {
             echo "Username exists";
