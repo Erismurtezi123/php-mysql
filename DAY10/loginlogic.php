@@ -10,7 +10,52 @@
         {
             echo "Fill all the fields!";
             header("refresh:2 url=signin.php");
-        }else{
+        }
+        else{
+
+$sql = "SELECT id, username, email, password, is_admin FORM users WHERE username=:username";
+$selectUser = $conn->prepare($sql);
+$selectUser->bindParam(":username",$username);
+$selectUser->execute();
+$data = $selectUser->fetch();
+ }
+if($data == false){
+    echo "The user dose not exist";
+}else {
+if(password_ferify($password,$data['password'])){
+$_SESSION['id'] = $data['id']
+$_SESSION['username'] = $data['username']
+$_SESSION['email'] = $data['email']
+$_SESSION['emri'] = $data['emri']
+$_SESSION['is_admin'] = $data['is_admin']
+
+header('Location:dashboard.php')
+
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+?>
             $sql = "SELECT * FROM users WHERE username = :username";
             $insertSQL = $conn->prepare($sql);
             $insertSQL->bindParam(':username', $username);
