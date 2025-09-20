@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faqja Kryesore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menuja e lundrimit -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Rreth Nesh</a></li>
+            <li><a href="#services">Shërbimet</a></li>
+            <li><a href="#contact">Kontakti</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+    <h1>Mirësevini në faqen tonë!</h1>
+    <p>Ne ofrojmë shërbime inovative në zhvillimin e faqeve web.</p>
+    <a href="#services" class="cta-btn">Shih shërbimet tona</a>
+</section>
+<section id="services">
+    <h2>Shërbimet</h2>
+    <div class="services-container">
+        <div class="service">
+            <i class="fa fa-code"></i>
+            <h3>Zhvillim Web</h3>
+            <p>Ofrojmë zgjidhje profesionale për krijimin e faqeve web.</p>
+        </div>
+        <div class="service">
+            <i class="fa fa-mobile-alt"></i>
+            <h3>Aplikacione Mobile</h3>
+            <p>Krijojmë aplikacione mobile për iOS dhe Android.</p>
+        </div>
+    </div>
+<section id="hero">
+    <h1>Mirësevini në faqen tonë!</h1>
+    <p>Ne ofrojmë shërbime inovative në zhvillimin e faqeve web.</p>
+    <a href="#services" class="cta-btn">Shih shërbimet tona</a>
+</section>
+
+<section id="services">
+    <h2>Shërbimet</h2>
+    <div class="services-container">
+        <div class="service">
+            <i class="fa fa-code"></i>
+            <h3>Zhvillim Web</h3>
+            <p>Ne ofrojmë zhvillim web të personalizuar për çdo biznes.</p>
+        </div>
+        <div class="service">
+            <i class="fa fa-mobile-alt"></i>
+            <h3>Aplikacione Mobile</h3>
+            <p>Zhvillim aplikacionesh për iOS dhe Android për bizneset tuaja.</p>
+        </div>
+    </div>
+</section>
+
+
+
+</section>
+<meta name="description" content="Ne ofrojmë shërbime profesionale të zhvillimit web dhe aplikacioneve mobile.">
+<input type="text" placeholder="Kërko..." id="search">
+
+<section id="home">
+    <h1>Mirësevini në faqen tonë!</h1>
+    <p>Ky është një shembull i një faqeje të thjeshtë HTML.</p>
+</section>
+
+    
+
+    <!-- Seksioni i faqes kryesore -->
+    <section id="home">
+        <h1>Mirësevini ne restaurantin tone</h1>
+        <p>Ky është një shembull i një faqeje të thjeshtë HTML.</p>
+    </section>
+
+    <!-- Seksioni për informacionin rreth nesh -->
+    <section id="about">
+        <h2>Rreth Nesh</h2>
+        <p>Ne ofrojmë shërbime profesionale në fushën e zhvillimit të faqeve web.</p>
+    </section>
+
+    <!-- Seksioni për shërbimet -->
+    <section id="services">
+        <h2>Shërbimet</h2>
+        <p>Ne ofrojmë zhvillim të faqeve web, aplikacione mobile dhe shumë më tepër.</p>
+    </section>
+
+    <!-- Seksioni i kontaktit -->
+    <section id="contact">
+        <h2>Kontakti</h2>
+        
+    </section>
+
+    <section id="location"></section>
+     <h2>lokacioni</h2>
+    <p>Magjistralja Prishtine-Pej</p>    
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<button><i class="fas fa-phone-alt"></i> Kontakt</button>
+<button><i class="fas fa-map-marker-alt"></i> Lokacioni</button>
+<section id="reservation-form">
+    <h2>Rezervo një Tryezë</h2>
+    <form action="submit_reservation.php" method="post">
+        <label for="name">Emri:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="date">Data dhe Ora:</label>
+        <input type="datetime-local" id="date" name="date" required>
+
+        <label for="guests">Numri i Pjesëmarrësve:</label>
+        <input type="number" id="guests" name="guests" required>
+
+        <input type="submit" value="Rezervo Tani">
+    </form>
+</section>
+<section id="search">
+    <h2>Kërko në Menynë Tonë</h2>
+    <input type="text" id="search-input" placeholder="Kërko ushqimin që do..." onkeyup="searchMenu()">
+    <div id="menu-list">
+        <div class="menu-item" data-name="Plato Mishi">Plato Mishi</div>
+        <div class="menu-item" data-name="Pica Margarita">Pica Margarita</div>
+        <div class="menu-item" data-name="Pasta Bolognese">Pasta Bolognese</div>
+    </div>
+</section>
+<script>
+function searchMenu() {
+    const input = document.getElementById('search-input').value.toLowerCase();
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+        if (item.dataset.name.toLowerCase().includes(input)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<div data-aos="fade-up">
+    <h2>Shërbimet tona</h2>
+    <p>Informacione mbi shërbimet që ofrojmë...</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<section id="location">
+    <h2>Lokacioni</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+</section>
+
+<script>
+function initMap() {
+    var location = {lat: 40.748817, lng: -73.985428}; // Vendndodhja (p.sh., Times Square)
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: location
+    });
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+<section id="reviews">
+    <h2>Rishikimet e Klientëve</h2>
+    <form action="submit_review.php" method="post">
+        <label for="name">Emri:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="review">Rishik
+</body>
+</html>
