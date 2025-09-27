@@ -1,26 +1,33 @@
 body {
     font-family: Arial, sans-serif;
-    background: #111;
+    background-color: #111;
     color: #fff;
     margin: 0;
+    padding: 0;
 }
 
 header nav {
-    background: #222;
-    padding: 10px;
+    background-color: #222;
+    padding: 10px 20px;
 }
 
 header nav a {
     color: #fff;
     margin-right: 15px;
     text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #14005b; 
 }
 
 .slider {
     display: flex;
     overflow: hidden;
     width: 80%;
-    margin: auto;
+    max-width: 1000px;
+    margin: 40px auto;
 }
 
 .slide {
@@ -30,5 +37,8 @@ header nav a {
 
 .slide img {
     width: 60%;
+    max-width: 100%;
+    height: auto;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }

@@ -3,72 +3,84 @@ include_once("config.php");
 
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
-    $title = trim($_POST['title']);
-    $genre = trim($_POST['genre']);
-    $year = trim($_POST['year']);
+    $name = trim($_POST['name']);
+    $category = trim($_POST['category']);
+    $price = trim($_POST['price']);
     $description = trim($_POST['description']);
-    $thumbnail = trim($_POST['thumbnail']);
+    $image = trim($_POST['image']);
 
-    if (empty($title) || empty($genre) || empty($year) || empty($description)) {
-        header("Location: edit.php?id=$id&error=empty_fields");
+    if (empty($name) || empty($category) || empty($price) || empty($description)) {
+        header("Location: updatedish.php?id=$id&error=empty_fields");
         exit();
     }
 
-    $sql = "UPDATE movies 
-            SET title=:title, genre=:genre, year=:year, description=:description, thumbnail=:thumbnail 
-            WHERE id=:id";
+    $sql = "UPDATE dishes 
+            SET name = :name, category = :category, price = :price, description = :description, image = :image 
+            WHERE id = :id";
 
     $prep = $pdo->prepare($sql);
     $prep->bindParam(':id', $id);
-    $prep->bindParam(':title', $title);
-    $prep->bindParam(':genre', $genre);
-    $prep->bindParam(':year', $year);
+    $prep->bindParam(':name', $name);
+    $prep->bindParam(':category', $category);
+    $prep->bindParam(':price', $price);
     $prep->bindParam(':description', $description);
-    $prep->bindParam(':thumbnail', $thumbnail);
+    $prep->bindParam(':image', $image);
 
     $prep->execute();
 
-    header("Location: dashboard.php?success=movie_updated");
+    header("Location: dashboard.php?success=dish_updated");
     exit();
 }
 
 if (!isset($_GET['id'])) {
-    die("Movie ID missing");
+    die("Dish ID missing");
 }
 
 $id = (int)$_GET['id'];
-$stmt = $pdo->prepare("SELECT * FROM movies WHERE id=?");
+$stmt = $pdo->prepare("SELECT * FROM dishes WHERE id = ?");
 $stmt->execute([$id]);
-$movie = $stmt->fetch();
+$dish = $stmt->fetch();
 
-if (!$movie) {
-    die("Movie not found");
+if (!$dish) {
+    die("Dish not found");
 }
 ?>
 
 <?php include 'header.php'; ?>
 
-<h2>Edit Movie</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Dish</h2>
 
-<form action="edit.php" method="post">
-    <input type="hidden" name="id" value="<?= $movie['id'] ?>">
-    
-    <label>Title:</label>
-    <input type="text" name="title" value="<?= htmlspecialchars($movie['title']) ?>"><br>
+    <form action="updatedish.php" method="post">
+        <input type="hidden" name="id" value="<?= $dish['id'] ?>">
 
-    <label>Genre:</label>
-    <input type="text" name="genre" value="<?= htmlspecialchars($movie['genre']) ?>"><br>
+        <div class="mb-3">
+            <label class="form-label">Dish Name</label>
+            <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($dish['name']) ?>" required>
+        </div>
 
-    <label>Year:</label>
-    <input type="number" name="year" value="<?= htmlspecialchars($movie['year']) ?>"><br>
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" name="category" class="form-control" value="<?= htmlspecialchars($dish['category']) ?>" required>
+        </div>
 
-    <label>Description:</label>
-    <textarea name="description"><?= htmlspecialchars($movie['description']) ?></textarea><br>
+        <div class="mb-3">
+            <label class="form-label">Price ($)</label>
+            <input type="number" step="0.01" name="price" class="form-control" value="<?= htmlspecialchars($dish['price']) ?>" required>
+        </div>
 
-    <label>Thumbnail URL:</label>
-    <input type="text" name="thumbnail" value="<?= htmlspecialchars($movie['thumbnail']) ?>"><br>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="4" required><?= htmlspecialchars($dish['description']) ?></textarea>
+        </div>
 
-    <button type="submit" name="update">Update</button>
-</form>
+        <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input type="text" name="image" class="form-control" value="<?= htmlspecialchars($dish['image']) ?>" required>
+        </div>
+
+        <button type="submit" name="update" class="btn btn-primary">Update Dish</button>
+    </form>
+</div>
 
 <?php include 'footer.php'; ?>

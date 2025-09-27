@@ -1,8 +1,8 @@
 <?php
-   session_start();
+session_start();
 
-$server = "localhost";
-$dbname = "netflix_clone";
+$host = "localhost";
+$dbname = "restaurant_db"; 
 $user = "root";
 $pass = "";
 
@@ -12,10 +12,6 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]);
 } catch (PDOException $e) {
-    die("DB connection failed: " . $e->getMessage());
-}
-
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
+    die("Database connection failed: " . $e->getMessage());
 }
 ?>

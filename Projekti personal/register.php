@@ -10,7 +10,13 @@ if (isset($_POST['submit'])) {
     $tempPass = trim($_POST['password']);
 
     if (empty($name) || empty($surname) || empty($username) || empty($email) || empty($tempPass)) {
-        echo "All fields are required!";
+        echo "<p style='color:red;'>All fields are required!</p>";
+        header("refresh:2; url=register.php");
+        exit();
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<p style='color:red;'>Invalid email format!</p>";
         header("refresh:2; url=register.php");
         exit();
     }
@@ -21,7 +27,7 @@ if (isset($_POST['submit'])) {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        echo "Username already exists!";
+        echo "<p style='color:red;'>Username already exists!</p>";
         header("refresh:2; url=register.php");
         exit();
     }
@@ -38,11 +44,11 @@ if (isset($_POST['submit'])) {
     $insertStmt->bindParam(':password', $password);
 
     if ($insertStmt->execute()) {
-        echo "Registration successful! Redirecting to login...";
+        echo "<p style='color:green;'>Registration successful! Redirecting to login...</p>";
         header("refresh:2; url=signin.php");
         exit();
     } else {
-        echo "Failed to register. Try again!";
+        echo "<p style='color:red;'>Failed to register. Try again!</p>";
         header("refresh:2; url=register.php");
         exit();
     }
@@ -76,7 +82,7 @@ if (isset($_POST['submit'])) {
 
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required>
+            <input type="password" name="password" class="form-control" required minlength="6">
         </div>
 
         <button type="submit" name="submit" class="btn btn-danger">Register</button>

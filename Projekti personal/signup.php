@@ -26,6 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         exit();
     }
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<div class='alert alert-danger text-center'>Invalid email format!</div>";
+        header("refresh:2; url=signup.php");
+        exit();
+    }
+
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
     $insertSql = "INSERT INTO users (name, surname, username, email, password_hash, is_admin) 
@@ -56,33 +62,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     <form action="signup.php" method="post" class="text-white">
         <div class="mb-3">
             <label for="firstName" class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" id="firstName" placeholder="Enter your name" required>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="name" 
+                id="firstName" 
+                placeholder="Enter your name" 
+                required 
+                autofocus
+                autocomplete="given-name"
+            >
         </div>
 
         <div class="mb-3">
             <label for="lastName" class="form-label">Surname</label>
-            <input type="text" class="form-control" name="surname" id="lastName" placeholder="Enter your surname" required>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="surname" 
+                id="lastName" 
+                placeholder="Enter your surname" 
+                required
+                autocomplete="family-name"
+            >
         </div>
 
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="Choose a username" required>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="username" 
+                id="username" 
+                placeholder="Choose a username" 
+                required
+                autocomplete="username"
+            >
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+            <input 
+                type="email" 
+                class="form-control" 
+                name="email" 
+                id="email" 
+                placeholder="Enter your email" 
+                required
+                autocomplete="email"
+            >
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+            <input 
+                type="password" 
+                class="form-control" 
+                name="password" 
+                id="password" 
+                placeholder="Enter your password" 
+                required
+                autocomplete="new-password"
+            >
         </div>
 
         <button type="submit" class="btn btn-danger" name="submit">Sign Up</button>
     </form>
 
-    <p class="mt-3">Already have an account? <a href="signin.php">Log in here</a></p>
+    <p class="mt-3">Already have an account? <a href="signin.php" class="text-danger">Log in here</a></p>
 </div>
 
 <?php include 'footer.php'; ?>

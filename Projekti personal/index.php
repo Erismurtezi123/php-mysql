@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Clone</title>
-   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
- 
+    <title>Delish Diner - Menu</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,18 +14,22 @@
 <?php include 'header.php'; ?>
 
 <div class="container mt-4">
-    <h1 class="text-white mb-4">Netflix Clone</h1>
+    <h1 class="mb-4 text-center">🍽️ Our Menu</h1>
 
-    <div id="movieSlider" class="row g-3">
+    <div class="row g-4">
         <?php
-        $stmt = $pdo->query("SELECT * FROM movies ORDER BY created_at DESC LIMIT 10");
-        foreach ($stmt as $movie): ?>
+        $stmt = $pdo->query("SELECT * FROM dishes ORDER BY created_at DESC LIMIT 12");
+        foreach ($stmt as $dish): ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card bg-dark text-white h-100">
-                    <img src="<?= htmlspecialchars($movie['thumbnail']) ?>" class="card-img-top" alt="<?= htmlspecialchars($movie['title']) ?>">
+                <div class="card h-100 shadow-sm">
+                    <img src="<?= htmlspecialchars($dish['image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($dish['name']) ?>" style="height: 180px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($movie['title']) ?></h5>
-                        <p class="card-text"><?= substr($movie['description'], 0, 100) ?>...</p>
+                        <h5 class="card-title"><?= htmlspecialchars($dish['name']) ?></h5>
+                        <p class="card-text text-muted mb-1"><?= htmlspecialchars($dish['category']) ?></p>
+                        <p class="card-text"><?= substr(htmlspecialchars($dish['description']), 0, 80) ?>...</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <strong>$<?= number_format($dish['price'], 2) ?></strong>
                     </div>
                 </div>
             </div>
@@ -36,7 +39,6 @@
 
 <?php include 'footer.php'; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

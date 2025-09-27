@@ -7,13 +7,12 @@ if (isset($_POST['submit'])) {
     $password = trim($_POST['password']);
 
     if (empty($username) || empty($password)) {
-        echo "Please fill in all fields!";
-        header("refresh:2; url=signin.php");
+        $_SESSION['error'] = "Please fill in all fields!";
+        header("Location: signin.php");
         exit();
     }
 
-    $sql = "SELECT * FROM users WHERE username = :username";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
     $stmt->bindParam(':username', $username);
     $stmt->execute();
 
@@ -21,18 +20,27 @@ if (isset($_POST['submit'])) {
         $user = $stmt->fetch();
 
         if (password_verify($password, $user['password_hash'])) {
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['user_id'] = $user['id'];
-            header("Location: dashboard.php");
+            $_SESSION['user'] = [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'is_admin' => $user['is_admin'],
+                'name' => $user['name'] ?? ''
+            ];
+
+            if ($user['is_admin']) {
+                header("Location: dashboard.php");
+            } else {
+                header("Location: index.php");
+            }
             exit();
         } else {
-            echo "Incorrect password!";
-            header("refresh:2; url=signin.php");
+            $_SESSION['error'] = "Incorrect password!";
+            header("Location: signin.php");
             exit();
         }
     } else {
-        echo "User not found!";
-        header("refresh:2; url=signin.php");
+        $_SESSION['error'] = "User not found!";
+        header("Location: signin.php");
         exit();
     }
 }

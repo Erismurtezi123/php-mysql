@@ -1,28 +1,14 @@
-<?php include 'config.php'; include 'header.php'; ?>
-
 <?php
-require 'config.php'; 
+include 'config.php';
+include 'header.php';
 
-if(isset($_POST['add_movie'])) {
-    $title = $_POST['title'];
-    $genre = $_POST['genre'];
-    $year = $_POST['year'];
-    $description = $_POST['description'];
-    $thumbnail = $_POST['thumbnail'];
+$stmt = $pdo->prepare("SELECT * FROM dishes ORDER BY id DESC");
+$stmt->execute();
+$dishes = $stmt->fetchAll();
 
-    $stmt = $pdo->prepare("INSERT INTO movies (title, genre, year, description, thumbnail) VALUES (:title, :genre, :year, :description, :thumbnail)");
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':genre', $genre);
-    $stmt->bindParam(':year', $year);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':thumbnail', $thumbnail);
-
-    if($stmt->execute()) {
-        echo "<p style='color:green'>Movie added successfully!</p>";
-    } else {
-        echo "<p style='color:red'>Error adding movie!</p>";
-    }
-}
+$userStmt = $pdo->prepare("SELECT * FROM users ORDER BY id DESC");
+$userStmt->execute();
+$users = $userStmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -30,27 +16,21 @@ if(isset($_POST['add_movie'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Restaurant Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            background-color: #141414;
-            color: #fff;
+            background-color: #f9f5f0;
+            color: #333;
         }
 
         .navbar {
-            background: #000;
+            background: #8B0000;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #e50914;
+            color: white;
         }
 
         .navbar .welcome-text {
@@ -59,89 +39,66 @@ if(isset($_POST['add_movie'])) {
         }
 
         .navbar .logout-btn {
-            background: #e50914;
-            color: white;
+            background: #fff;
+            color: #8B0000;
             padding: 8px 15px;
             border-radius: 4px;
             text-decoration: none;
-            font-size: 1rem;
-            transition: background 0.3s ease;
+            font-weight: bold;
         }
 
         .navbar .logout-btn:hover {
-            background: #b00610;
+            background: #f0f0f0;
         }
 
         .container {
-            display: flex;
-            justify-content: center;
-            margin: 30px;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .users-table {
-            width: 90%;
-            background-color: #1c1c1c;
+        .dashboard-section {
+            background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .users-table h3 {
+        .dashboard-section h3 {
             margin-bottom: 15px;
             font-size: 1.5rem;
-            color: #e50914;
+            color: #8B0000;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
             font-size: 0.95rem;
         }
 
         th, td {
             padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #222;
-            color: #e5e5e5;
-            font-weight: bold;
+            background-color: #f3f3f3;
         }
 
-        tr:nth-child(even) td {
-            background-color: #2a2a2a;
-        }
-
-        tr:nth-child(odd) td {
-            background-color: #1c1c1c;
+        tr:hover {
+            background-color: #f9f9f9;
         }
 
         td a {
-            color: #e50914;
+            color: #8B0000;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.2s ease;
         }
 
         td a:hover {
-            color: #ff4747;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .users-table {
-                width: 100%;
-            }
-
-            table, th, td {
-                font-size: 0.85rem;
-            }
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -153,7 +110,41 @@ if(isset($_POST['add_movie'])) {
 </div>
 
 <div class="container">
-    <div class="users-table">
+
+    <div class="dashboard-section">
+        <h3>All Dishes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Dish Name</th>
+                    <th>Category</th>
+                    <th>Price ($)</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($dishes as $dish): ?>
+                    <tr>
+                        <td><?= $dish['id']; ?></td>
+                        <td><?= htmlspecialchars($dish['name']); ?></td>
+                        <td><?= htmlspecialchars($dish['category']); ?></td>
+                        <td><?= number_format($dish['price'], 2); ?></td>
+                        <td>
+                            <img src="<?= $dish['image']; ?>" alt="Dish Image" width="60" height="40" style="object-fit:cover;">
+                        </td>
+                        <td>
+                            <a href="updatedish.php?id=<?= $dish['id']; ?>">Edit</a> |
+                            <a href="deletedish.php?id=<?= $dish['id']; ?>" onclick="return confirm('Are you sure you want to delete this dish?');">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dashboard-section">
         <h3>All Users</h3>
         <table>
             <thead>
@@ -168,25 +159,24 @@ if(isset($_POST['add_movie'])) {
             </thead>
             <tbody>
                 <?php foreach($users as $user): ?>
-                <tr>
-                    <td><?php echo $user['id']; ?></td>
-                    <td><?php echo $user['name']; ?></td>
-                    <td><?php echo $user['surname']; ?></td>
-                    <td><?php echo $user['username']; ?></td>
-                    <td><?php echo $user['email']; ?></td>
-                    <td>
-                        <a href="update.php?id=<?php echo $user['id']; ?>">Edit</a> |
-                        <a href="delete.php?id=<?php echo $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $user['id']; ?></td>
+                        <td><?= htmlspecialchars($user['name']); ?></td>
+                        <td><?= htmlspecialchars($user['surname']); ?></td>
+                        <td><?= htmlspecialchars($user['username']); ?></td>
+                        <td><?= htmlspecialchars($user['email']); ?></td>
+                        <td>
+                            <a href="updateuser.php?id=<?= $user['id']; ?>">Edit</a> |
+                            <a href="deleteuser.php?id=<?= $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+
 </div>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>
-
-
-<?php include 'footer.php'; ?>

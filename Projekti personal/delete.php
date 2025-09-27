@@ -1,10 +1,11 @@
-<?php include 'config.php';
+<?php
+include 'config.php';
 
 if (isset($_GET['id'])) {
-    $stmt = $pdo->prepare("DELETE FROM movies WHERE id=?");
+    $stmt = $pdo->prepare("DELETE FROM dishes WHERE id = ?");
     $stmt->execute([$_GET['id']]);
 }
 
 header("Location: dashboard.php");
-
+exit();
 ?>
