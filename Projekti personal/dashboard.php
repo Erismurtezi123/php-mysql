@@ -68,7 +68,7 @@ $users = $userStmt->fetchAll();
         .dashboard-section h3 {
             margin-bottom: 15px;
             font-size: 1.5rem;
-            color: #8B0000;
+            color: #8b0000ff;
         }
 
         table {
@@ -174,8 +174,8 @@ $users = $userStmt->fetchAll();
             </tbody>
         </table>
     </div>
-
 </div>
+
 
 <?php include 'footer.php'; ?>
 </body>
