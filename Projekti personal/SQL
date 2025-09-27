@@ -1,5 +1,5 @@
-CREATE DATABASE netflix_clone CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE netflix_clone;
+CREATE DATABASE restaurant_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE restaurant_db;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
