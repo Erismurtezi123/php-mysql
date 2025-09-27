@@ -2,14 +2,13 @@
 session_start();
 include 'config.php';
 
-// Redirect to login if not authenticated
 if (empty($_SESSION['username'])) {
     header("Location: signin.php");
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
-    $id = (int)$_POST['id'];  // Cast to int for safety
+    $id = (int)$_POST['id'];  
     $name = trim($_POST['name']);
     $category = trim($_POST['category']);
     $price = floatval($_POST['price']);
@@ -36,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     exit();
 }
 
-// GET request validation
 if (!isset($_GET['id'])) {
     die("Dish ID not provided.");
 }
@@ -58,7 +56,6 @@ if (!$dish) {
 <div class="container mt-5">
     <h2 class="text-white mb-4">Edit Dish</h2>
 
-    <!-- Show error if exists -->
     <?php if (!empty($_SESSION['error'])): ?>
         <div class="alert alert-danger text-center">
             <?= htmlspecialchars($_SESSION['error']) ?>
